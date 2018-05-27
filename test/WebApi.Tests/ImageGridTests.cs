@@ -27,7 +27,6 @@ namespace WebApi.Tests
 
             var triangle = imageGrid.GetTriangleByRowAndColumnNames("A", "1");
 
-
             var expectedName = "A1";
             var expectedNumberOfCoordinates = 3;
             
@@ -55,6 +54,27 @@ namespace WebApi.Tests
             triangle.Vertices[0].Should().BeEquivalentTo(new Vertex { X = 10, Y = 0 });
             triangle.Vertices[1].Should().BeEquivalentTo(new Vertex { X = 20, Y = -10 });
             triangle.Vertices[2].Should().BeEquivalentTo(new Vertex { X = 10, Y = -10 });
+
+        }
+
+        [TestMethod]
+        public void GetTriangleByRowAndColumn_B3()
+        {
+            var imageGrid = new ImageGrid(60, 60);
+
+            var triangle = imageGrid.GetTriangleByRowAndColumnNames("B", "3");
+
+
+            var expectedName = "B3";
+            var expectedNumberOfCoordinates = 3;
+
+            triangle.Name.Should().Be(expectedName);
+            triangle.Vertices.Should().NotBeEmpty()
+                .And.HaveCount(expectedNumberOfCoordinates);
+
+            triangle.Vertices[0].Should().BeEquivalentTo(new Vertex { X = 10, Y = -10 });
+            triangle.Vertices[1].Should().BeEquivalentTo(new Vertex { X = 20, Y = -20 });
+            triangle.Vertices[2].Should().BeEquivalentTo(new Vertex { X = 10, Y = -20 });
 
         }
     }

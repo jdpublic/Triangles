@@ -25,8 +25,9 @@ namespace WebApi.Models
                 throw new ArgumentOutOfRangeException(nameof(columnName), "expected numeric string between 1 and 12");
             }
 
+            
 
-            if (rowName != "A")
+            if (rowName != "A" && rowName != "B" )
             {
                 throw new NotImplementedException();
             }
@@ -34,16 +35,25 @@ namespace WebApi.Models
             var t = new Triangle() { RowName = rowName, ColumnName = columnName };
 
             bool isEvenColNumber = (colNumber % 2 == 0);
-            int xOffsetRight = ((isEvenColNumber) ? colNumber : colNumber+1) / 2;
 
+            int xOffsetRight = ((isEvenColNumber) ? colNumber : colNumber+1) / 2;
             int xOffsetLeft = xOffsetRight - 1;
 
             int xLeft = (10 * xOffsetLeft);
             int xRight = (10 * xOffsetRight);
 
-            t.Vertices.Add(new Vertex { X = xLeft, Y = 0 });
-            t.Vertices.Add(new Vertex { X = xRight, Y = -10 });
-            t.Vertices.Add(new Vertex { X = xLeft, Y = -10 });
+            int rowIndex = (int)rowName[0] - (int)'A'; //zero based
+            int rowNumber = rowIndex + 1;
+
+            int yTopOffset = (10 * rowIndex);
+            int yBottomOffset = (10 * rowNumber);
+
+            int yTop = 0 - yTopOffset;
+            int yBottom = 0 - yBottomOffset;
+
+            t.Vertices.Add(new Vertex { X = xLeft, Y = yTop });
+            t.Vertices.Add(new Vertex { X = xRight, Y = yBottom });
+            t.Vertices.Add(new Vertex { X = xLeft, Y = yBottom });
 
             return t;
         }
