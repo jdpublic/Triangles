@@ -1,0 +1,6 @@
+/.vs/
+/packages/
+/src/WebApi/bin/
+/src/WebApi/obj/
+/test/WebApi.Tests/bin/
+/test/WebApi.Tests/obj/

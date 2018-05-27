@@ -1,0 +1,44 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27428.2037
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{653B7166-E6EB-4622-9D79-AEF6E3F06A9A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{B16F770B-37D8-4B12-B923-7124C1D30916}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi", "src\WebApi\WebApi.csproj", "{8FC87DC8-9809-417D-8E82-C0A6635B38B3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C9099E7C-2053-4997-AC92-2626EB64A723}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi.Tests", "test\WebApi.Tests\WebApi.Tests.csproj", "{85CF4479-36C4-457F-AF9F-D6053E19DA0B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8FC87DC8-9809-417D-8E82-C0A6635B38B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8FC87DC8-9809-417D-8E82-C0A6635B38B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8FC87DC8-9809-417D-8E82-C0A6635B38B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8FC87DC8-9809-417D-8E82-C0A6635B38B3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{85CF4479-36C4-457F-AF9F-D6053E19DA0B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{85CF4479-36C4-457F-AF9F-D6053E19DA0B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{85CF4479-36C4-457F-AF9F-D6053E19DA0B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{85CF4479-36C4-457F-AF9F-D6053E19DA0B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{8FC87DC8-9809-417D-8E82-C0A6635B38B3} = {653B7166-E6EB-4622-9D79-AEF6E3F06A9A}
+		{85CF4479-36C4-457F-AF9F-D6053E19DA0B} = {B16F770B-37D8-4B12-B923-7124C1D30916}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {893FF80F-5A18-46C6-B3F9-E465B5C51A83}
+	EndGlobalSection
+EndGlobal
