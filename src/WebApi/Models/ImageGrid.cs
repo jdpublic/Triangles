@@ -14,16 +14,36 @@ namespace WebApi.Models
         public int Height { get; internal set; }
         public Triangle GetTriangleByRowAndColumnNames(string rowName, string columnName)
         {
-            if (rowName != "A" || columnName != "1")
+            int colNumber;
+            if (!int.TryParse(columnName, out colNumber))
+            {
+                throw new ArgumentException("numeric string value expected", nameof(columnName));
+            }
+
+            if (colNumber < 0 || colNumber > 12)
+            {
+                throw new ArgumentOutOfRangeException(nameof(columnName), "expected numeric string between 1 and 12");
+            }
+
+
+            if (rowName != "A")
             {
                 throw new NotImplementedException();
             }
 
-            var t =  new Triangle() { RowName = rowName, ColumnName = columnName };
+            var t = new Triangle() { RowName = rowName, ColumnName = columnName };
 
-            t.Vertices.Add(new Vertex { X = 0, Y = 0 });
-            t.Vertices.Add(new Vertex { X = 10, Y = -10 });
-            t.Vertices.Add(new Vertex { X = 0, Y = -10 });
+            bool isEvenColNumber = (colNumber % 2 == 0);
+            int xOffsetRight = ((isEvenColNumber) ? colNumber : colNumber+1) / 2;
+
+            int xOffsetLeft = xOffsetRight - 1;
+
+            int xLeft = (10 * xOffsetLeft);
+            int xRight = (10 * xOffsetRight);
+
+            t.Vertices.Add(new Vertex { X = xLeft, Y = 0 });
+            t.Vertices.Add(new Vertex { X = xRight, Y = -10 });
+            t.Vertices.Add(new Vertex { X = xLeft, Y = -10 });
 
             return t;
         }
