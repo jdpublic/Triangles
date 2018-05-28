@@ -11,7 +11,6 @@ namespace WebApi.Models
 
         public string RowName { get; set; }
         public string ColumnName { get; set; }
-
         public string Name => RowName + ColumnName;
 
         public List<Vertex> Vertices { get; set; }

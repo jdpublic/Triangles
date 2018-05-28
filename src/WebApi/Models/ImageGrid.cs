@@ -4,15 +4,30 @@ namespace WebApi.Models
 {
     public class ImageGrid
     {
-        public ImageGrid(int width, int height)
+
+        public ImageGrid() : this(60,60,10)
+        {
+            //default 
+        }
+        public ImageGrid(int width, int height, int cellSize)
         {
             this.Width = width;
             this.Height = height;
+            this.CellSize = cellSize;
         }
 
-        public int Width { get; internal set; }
-        public int Height { get; internal set; }
-        public Triangle GetTriangleByRowAndColumnNames(string rowName, string columnName)
+        public readonly int Width;
+        public readonly int Height;
+        public readonly int CellSize;
+
+       /// <summary>
+       /// A Triangle object with vertex coordinates for the corners relative to this ImageGrid's
+       /// top left corner
+       /// </summary>
+       /// <param name="rowName">The Row reference as a string</param>
+       /// <param name="columnName">The Column reference as a string</param>
+       /// <returns>Triangle Object</returns>
+        public Triangle GetTriangleByRowAndColumn(string rowName, string columnName)
         {
             int rowIndex, colIndex;
 
@@ -21,30 +36,43 @@ namespace WebApi.Models
             var t = new Triangle() { RowName = rowName, ColumnName = columnName };
 
             int xLeft, xRight;
-            CalcXCoordinates(colIndex, out xLeft, out xRight);
+            CalcCellXCoordinates(colIndex, CellSize, out xLeft, out xRight);
 
             int yTop, yBottom;
-            CalcYCoordinates(rowIndex, out yTop, out yBottom);
+            CalcCellYCoordinates(rowIndex, CellSize, out yTop, out yBottom);
 
+            //add vertices 
+
+            //Common - top left and bottom right
             t.Vertices.Add(new Vertex { X = xLeft, Y = yTop });
             t.Vertices.Add(new Vertex { X = xRight, Y = yBottom });
-            t.Vertices.Add(new Vertex { X = xLeft, Y = yBottom });
 
+            bool colNumberIsEven = (colIndex+1) % 2 == 0;
+            if (colNumberIsEven)
+            {
+                //top right
+                t.Vertices.Add(new Vertex { X = xRight, Y = yTop });
+            }
+            else
+            {
+                //bottom left
+                t.Vertices.Add(new Vertex { X = xLeft, Y = yBottom });
+            }
             return t;
         }
 
-        private static void CalcYCoordinates(int rowIndex, out int yTop, out int yBottom)
+        private static void CalcCellYCoordinates(int rowIndex, int cellSize, out int yTop, out int yBottom)
         {
             int rowNumber = rowIndex + 1;
 
-            int yTopOffset = (10 * rowIndex);
-            int yBottomOffset = (10 * rowNumber);
+            int yTopOffset = (cellSize * rowIndex);
+            int yBottomOffset = (cellSize * rowNumber);
 
             yTop = 0 - yTopOffset;
             yBottom = 0 - yBottomOffset;
         }
 
-        private static void CalcXCoordinates(int colIndex, out int xLeft, out int xRight)
+        private static void CalcCellXCoordinates(int colIndex, int cellSize, out int xLeft, out int xRight)
         {
             int colNumber = colIndex + 1;
             bool isEvenColNumber = (colNumber % 2 == 0);
@@ -52,8 +80,8 @@ namespace WebApi.Models
             int xOffsetRight = ((isEvenColNumber) ? colNumber : colNumber + 1) / 2;
             int xOffsetLeft = xOffsetRight - 1;
 
-            xLeft = (10 * xOffsetLeft);
-            xRight = (10 * xOffsetRight);
+            xLeft = (cellSize * xOffsetLeft);
+            xRight = (cellSize * xOffsetRight);
         }
 
         private static void ValidateAndGetRowAndColumnIndexes(string rowName, string columnName, out int rowIndex, out int colIndex)
@@ -64,19 +92,25 @@ namespace WebApi.Models
                 throw new ArgumentException("numeric string value expected", nameof(columnName));
             }
 
-            if (colNumber < 0 || colNumber > 12)
+            colIndex = colNumber - 1;
+
+            if (colIndex < 0 || colIndex > 11)
             {
                 throw new ArgumentOutOfRangeException(nameof(columnName), "expected numeric string between 1 and 12");
             }
 
-            colIndex = colNumber - 1;
-
-            if (rowName != "A" && rowName != "B")
+            
+            if (string.IsNullOrEmpty(rowName))
             {
-                throw new NotImplementedException();
+                throw new ArgumentException("it should not be null or empty", nameof(rowName));
             }
 
             rowIndex = (int)rowName[0] - (int)'A'; //zero based
+
+            if (rowIndex < 0 || rowIndex > 5)
+            {
+                throw new ArgumentOutOfRangeException(nameof(rowName), "expected letter A through F");
+            }
         }
     }
 }
