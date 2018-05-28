@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Simple WebApi test page</title>
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+    <script>
+
+        function getTriangleCallback(result, status, xhr) {
+            var jqEl = $("#content1"); 
+
+            jqEl.empty();
+            jqEl.append("timestamp = " + (new Date()).toTimeString() + " <br/>");
+            jqEl.append("status = " + status + " <br/>");
+            jqEl.append("json = " + JSON.stringify(result));
+
+        }
+
+        function btnClickHandler(e) {
+            try {
+                var gridRef = $("#txtGridRef").val().trim();
+
+                var row = gridRef.substr(0, 1); //"A";
+                var col = gridRef.substr(1).trim(); //"1";
+
+                var url = "api/imagegrid/GetTriangle?row=" + row + "&col=" + col;
+
+                $.getJSON(url, getTriangleCallback);
+
+            } catch (e) {
+                handleError(e);
+            }
+        }
+
+        function handleError(e) {
+            $("#contentError").empty();
+            $("#contentError").append("ERROR: " + e + "<br/>");
+        }
+
+        
+    </script>
+</head>
+<body>
+    <h1>Simple WebApi Test Page</h1>
+    <div>
+        <input type="text" id="txtGridRef" value="A1" />
+        <button type="button" title="Get Triangle" onclick="btnClickHandler()">Get Triangle</button>
+    </div>
+    <div id="content1"></div>
+    <div id="contentError"></div>
+</body>
+</html>
