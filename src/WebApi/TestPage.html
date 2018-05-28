@@ -7,9 +7,8 @@
     <script>
 
         function getTriangleCallback(result, status, xhr) {
+            alert(status);
             var jqEl = $("#content1"); 
-
-            jqEl.empty();
             jqEl.append("timestamp = " + (new Date()).toTimeString() + " <br/>");
             jqEl.append("status = " + status + " <br/>");
             jqEl.append("json = " + JSON.stringify(result));
@@ -25,7 +24,9 @@
 
                 var url = "api/imagegrid/GetTriangle?row=" + row + "&col=" + col;
 
-                $.getJSON(url, getTriangleCallback);
+                $("#content1").empty();
+                $.getJSON(url, getTriangleCallback)
+                    .fail(function (jqxhr, status, error ) { handleError(status + " - " + error ); });
 
             } catch (e) {
                 handleError(e);

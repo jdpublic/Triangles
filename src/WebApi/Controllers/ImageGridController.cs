@@ -16,7 +16,10 @@ namespace WebApi.Controllers
         [HttpGet]
         public Triangle GetTriangle(string row, string col)
         {
-            var t =  new Triangle() { RowName = row, ColumnName = col };
+            var imageGrid = new ImageGrid();
+
+            var t = imageGrid.GetTriangleByRowAndColumn(row, col);
+
             return t;
         }
 
