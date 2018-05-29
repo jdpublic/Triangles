@@ -16,11 +16,33 @@ namespace WebApi.Controllers
         [HttpGet]
         public Triangle GetTriangle(string row, string col)
         {
-            var imageGrid = new ImageGrid();
+            Triangle triangle = null;
 
-            var t = imageGrid.GetTriangleByRowAndColumn(row, col);
+            try
+            {
+                var imageGrid = new ImageGrid();
+                triangle = imageGrid.GetTriangleByRowAndColumn(row, col);
+            }
+            catch (ArgumentException argEx) //also covers ArgumentOutOfRangeException as descendant
+            {
+                HandleArgumentErrors(row, col, argEx);
+            }
 
-            return t;
+            return triangle;
+        }
+
+        /// <summary>
+        /// simple error handler for now, could refactor to use ExceptionAttribute filter etc
+        /// </summary>
+        private static void HandleArgumentErrors(string row, string col, ArgumentException argEx)
+        {
+            //return status 400 - BadRequest
+            var resp = new HttpResponseMessage(HttpStatusCode.BadRequest)
+            {
+                Content = new StringContent(argEx.Message),
+                ReasonPhrase = $"{argEx.GetType().Name} (row '{row}', col '{col}')",
+            };
+            throw new HttpResponseException(resp);
         }
 
         // POST: api/ImageGrid

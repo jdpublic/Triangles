@@ -17,6 +17,7 @@
 
         function btnClickHandler(e) {
             try {
+
                 var gridRef = $("#txtGridRef").val().trim();
 
                 var row = gridRef.substr(0, 1); //"A";
@@ -26,7 +27,7 @@
 
                 $("#content1").empty();
                 $.getJSON(url, getTriangleCallback)
-                    .fail(function (jqxhr, status, error ) { handleError(status + " - " + error ); });
+                    .fail(function (jqxhr, status, error ) { handleError( error ); });
 
             } catch (e) {
                 handleError(e);
