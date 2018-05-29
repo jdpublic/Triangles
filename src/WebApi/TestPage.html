@@ -6,13 +6,38 @@
     <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
     <script>
 
+        function drawTriangle(triangle) {
+
+            console.log(triangle);
+            console.log(triangle.Vertices.length);
+
+            var c = $("#canvas1")[0];
+            var ctx = c.getContext("2d");
+            var p1 = triangle.Vertices[0];
+            var p2 = triangle.Vertices[1];
+            var p3 = triangle.Vertices[2];
+         
+            console.log(c);
+            console.log(p1);
+            console.log(p2);
+            console.log(p3);
+
+            var zoom = 2; //simple zoom here could look at canvas scale method also
+            ctx.moveTo(p1.X * zoom, -p1.Y * zoom);
+            ctx.lineTo(p2.X * zoom, -p2.Y * zoom);
+            ctx.lineTo(p3.X * zoom, -p3.Y * zoom);
+            ctx.lineTo(p1.X * zoom, -p1.Y * zoom);
+            ctx.stroke();
+            
+        }
+
         function getTriangleCallback(result, status, xhr) {
-            alert(status);
+            //alert(status);
             var jqEl = $("#content1"); 
             jqEl.append("timestamp = " + (new Date()).toTimeString() + " <br/>");
             jqEl.append("status = " + status + " <br/>");
             jqEl.append("json = " + JSON.stringify(result));
-
+            drawTriangle(result);
         }
 
         function btnClickHandler(e) {
@@ -26,6 +51,7 @@
                 var url = "api/imagegrid/GetTriangle?row=" + row + "&col=" + col;
 
                 $("#content1").empty();
+                $("#contentError").empty();
                 $.getJSON(url, getTriangleCallback)
                     .fail(function (jqxhr, status, error ) { handleError( error ); });
 
@@ -44,11 +70,19 @@
 </head>
 <body>
     <h1>Simple WebApi Test Page</h1>
+    <h2>Q 1.A</h2>
     <div>
+        <p>Enter Row and Column e.g. A1</p>
         <input type="text" id="txtGridRef" value="A1" />
         <button type="button" title="Get Triangle" onclick="btnClickHandler()">Get Triangle</button>
     </div>
+    <br />
     <div id="content1"></div>
     <div id="contentError"></div>
+    <br />
+    <canvas id="canvas1" width="120" height="120" style="border:1px solid #d3d3d3;"></canvas>
+    <h2>Q 1.B</h2>
+    <div>WIP</div>
+
 </body>
 </html>
