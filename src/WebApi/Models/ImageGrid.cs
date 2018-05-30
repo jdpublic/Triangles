@@ -75,21 +75,23 @@ namespace WebApi.Models
             var v2 = vertices[1];
             var v3 = vertices[2];
 
-            int col = CalcColumn(vertices);
+            var col = CalcColumn(vertices);
 
-            string rowLetter = CalcRowLetter(vertices);
+            var rowLetter = CalcRowLetter(vertices);
 
-            return rowLetter + col;
+            return $"{rowLetter}{col}";
             
         }
 
-        private string CalcRowLetter(List<Vertex> vertices)
+        private char CalcRowLetter(List<Vertex> vertices)
         {
+            const byte asciiA = 65; //(byte)'A'
+
             var minY = (from v in vertices select v.Y).Min();
             var rowNumber = Math.Abs(minY) / CellSize;
-            var ascii = (int)'A' + rowNumber -1;
+            var ascii = asciiA + rowNumber -1;
             var letter = (char)ascii;
-            return letter.ToString();
+            return letter;
         }
 
         private int CalcColumn(List<Vertex> vertices)
