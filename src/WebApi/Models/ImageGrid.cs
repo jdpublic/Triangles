@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace WebApi.Models
 {
@@ -70,7 +71,18 @@ namespace WebApi.Models
         /// <returns></returns>
         public string GetRowAndColumn(List<Vertex> vertices)
         {
-            throw new NotImplementedException();
+            var v1 = vertices[0];
+            var v2 = vertices[1];
+            var v3 = vertices[2];
+
+            var xValues = from v in vertices select v.X;
+            var xMax = xValues.Max();
+
+            var col = xMax / CellSize;
+
+            return "A" + col;
+
+            //throw new NotImplementedException();
         }
 
         private static void CalcCellYCoordinates(int rowIndex, int cellSize, out int yTop, out int yBottom)
