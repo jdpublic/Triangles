@@ -81,6 +81,7 @@
   <ItemGroup>
     <Content Include="Global.asax" />
     <Content Include="TestPage.html" />
+    <Content Include="TestPage.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
