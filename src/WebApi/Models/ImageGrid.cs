@@ -75,18 +75,26 @@ namespace WebApi.Models
             var v2 = vertices[1];
             var v3 = vertices[2];
 
+            int col = CalcRow(vertices);
+
+            return "A" + col;
+            
+        }
+
+        private int CalcRow(List<Vertex> vertices)
+        {
             var xValues = from v in vertices select v.X;
             var xMax = xValues.Max();
 
-            var col = (xMax / CellSize * 2) ;
-            
+            var col = (xMax / CellSize * 2);
+
             //two columns per grid cell
             //upper has 2 of 3 vertices on right edge
             //lower has 2 of 3 vertices on left edge
 
             var numberOfXmaxVertices = (from v in vertices where v.X == xMax select v).Count();
 
-            if (numberOfXmaxVertices== 2)
+            if (numberOfXmaxVertices == 2)
             {
                 //col += 2;
             }
@@ -95,9 +103,7 @@ namespace WebApi.Models
                 col -= 1;
             }
 
-            return "A" + col;
-
-            //throw new NotImplementedException();
+            return col;
         }
 
         private static void CalcCellYCoordinates(int rowIndex, int cellSize, out int yTop, out int yBottom)
