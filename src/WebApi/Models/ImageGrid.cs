@@ -79,6 +79,17 @@ namespace WebApi.Models
             var xMax = xValues.Max();
 
             var col = xMax / CellSize;
+            
+            //two columns per grid cell
+            //upper has 2 of 3 vertices on right edge
+            //lower has 2 of 3 vertices on left edge
+
+            var numberOfXmaxVertices = (from v in vertices where v.X == xMax select v).Count();
+
+            if (numberOfXmaxVertices== 2)
+            {
+                col += 1;
+            }
 
             return "A" + col;
 
