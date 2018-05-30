@@ -78,7 +78,7 @@ namespace WebApi.Models
             var xValues = from v in vertices select v.X;
             var xMax = xValues.Max();
 
-            var col = xMax / CellSize;
+            var col = (xMax / CellSize * 2) ;
             
             //two columns per grid cell
             //upper has 2 of 3 vertices on right edge
@@ -88,7 +88,11 @@ namespace WebApi.Models
 
             if (numberOfXmaxVertices== 2)
             {
-                col += 1;
+                //col += 2;
+            }
+            else
+            {
+                col -= 1;
             }
 
             return "A" + col;
