@@ -6,8 +6,11 @@ using WebApi.Models;
 
 namespace WebApi.Tests
 {
+    /// <summary>
+    /// ImageGrid Method Tests - mainly relating to GetTriangleByRowAndColumn Method
+    /// </summary>
     [TestClass]
-    public class ImageGridTests
+    public partial class ImageGridTests
     {
         ImageGrid TestImageGrid;
 

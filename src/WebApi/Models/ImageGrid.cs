@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace WebApi.Models
 {
@@ -59,6 +60,17 @@ namespace WebApi.Models
                 t.Vertices.Add(new Vertex { X = xLeft, Y = yBottom });
             }
             return t;
+        }
+
+        /// <summary>
+        /// This method returns the Image Row Letter and Column Number as a single string
+        /// calculated from the supplied triangle vertex coordinates
+        /// </summary>
+        /// <param name="vertices">The vertices of a specific triangle</param>
+        /// <returns></returns>
+        public string GetRowAndColumn(List<Vertex> vertices)
+        {
+            throw new NotImplementedException();
         }
 
         private static void CalcCellYCoordinates(int rowIndex, int cellSize, out int yTop, out int yBottom)
