@@ -107,11 +107,7 @@ namespace WebApi.Models
 
             var numberOfXmaxVertices = (from v in vertices where v.X == xMax select v).Count();
 
-            if (numberOfXmaxVertices == 2)
-            {
-                //col += 2;
-            }
-            else
+            if (numberOfXmaxVertices != 2)
             {
                 col -= 1;
             }
