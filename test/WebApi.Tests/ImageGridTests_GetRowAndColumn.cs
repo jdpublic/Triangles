@@ -36,5 +36,75 @@ namespace WebApi.Tests
             rowAndColumn.Should().Be(expectedRowAndColumn, "the row letter and column number should be as expected");
         }
 
+
+
+        [TestMethod]
+        public void GetRowAndColumn_Vertices_Null()
+        {
+
+            List<Vertex> vertices = null;
+
+            Action act = () =>  TestImageGrid.GetRowAndColumn(vertices);
+
+            act.Should().Throw<ArgumentNullException>("no vertices list is supplied");
+        }
+
+        [TestMethod]
+        public void GetRowAndColumn_Vertices_TooFew()
+        {
+
+            List<Vertex> vertices = new List<Vertex>();
+           
+            //check count is < 3 before act
+            vertices.Count.Should().BeLessThan(3, "test action required input of less than three vertices to be valid ");
+            
+            //act
+            Action act = () => TestImageGrid.GetRowAndColumn(vertices);
+
+            act.Should().Throw<ArgumentOutOfRangeException>($"expected list of 3 vertices got {vertices.Count}");
+        }
+
+        [TestMethod]
+        public void GetRowAndColumn_Vertices_TooMany()
+        {
+
+            List<Vertex> vertices = new List<Vertex>() { new Vertex(), new Vertex(), new Vertex(), new Vertex() };
+
+            //check count is > 3 before act
+            vertices.Count.Should().BeGreaterThan(3, "test action required input of more than three vertices to be valid ");
+
+            //act
+            Action act = () => TestImageGrid.GetRowAndColumn(vertices);
+
+            act.Should().Throw<ArgumentOutOfRangeException>($"expected list of 3 vertices got {vertices.Count}");
+        }
+
+        [TestMethod]
+        [DataRow(-1)] //outwith grid lower
+        [DataRow(15)] //mid cell
+        [DataRow(65)] //outwith grid upper
+        public void GetRowAndColumn_Vertices_InvalidVertexX(int invalidX)
+        {
+            List<Vertex> vertices = new List<Vertex>() { new Vertex() { X = invalidX }, new Vertex(), new Vertex() };
+
+
+            Action act = () => TestImageGrid.GetRowAndColumn(vertices);
+
+            act.Should().Throw<ArgumentOutOfRangeException>($"invalid vertex X coordinate ({invalidX})");
+        }
+
+        [TestMethod]
+        [DataRow(-1)] //outwith grid lower
+        [DataRow(15)] //mid cell
+        [DataRow(65)] //outwith grid upper
+        public void GetRowAndColumn_Vertices_InvalidVertexY(int invalidY)
+        {
+            List<Vertex> vertices = new List<Vertex>() { new Vertex(), new Vertex() { Y= invalidY },  new Vertex() };
+
+
+            Action act = () => TestImageGrid.GetRowAndColumn(vertices);
+
+            act.Should().Throw<ArgumentOutOfRangeException>($"invalid vertex Y coordinate ({invalidY})");
+        }
     }
 }

@@ -63,6 +63,7 @@ namespace WebApi.Models
             return t;
         }
 
+       
         /// <summary>
         /// This method returns the Image Row Letter and Column Number as a single string
         /// calculated from the supplied triangle vertex coordinates
@@ -71,6 +72,9 @@ namespace WebApi.Models
         /// <returns></returns>
         public string GetRowAndColumn(List<Vertex> vertices)
         {
+
+            ValidateVertices(vertices);
+
             var v1 = vertices[0];
             var v2 = vertices[1];
             var v3 = vertices[2];
@@ -83,6 +87,39 @@ namespace WebApi.Models
             
         }
 
+        void ValidateVertices(List<Vertex> vertices)
+        {
+            if (vertices == null)
+            {
+                throw new ArgumentNullException(nameof(vertices), "expected list of triangle vertices");
+            }
+
+            var cnt = vertices.Count();
+
+            if (cnt != 3)
+            {
+                throw new ArgumentOutOfRangeException(nameof(vertices), $"expected list of 3 triangle vertices got {cnt}");
+            }
+
+            var invalidX = (from v in vertices
+                            where (v.X < 0) || (v.X > Width) || (v.X % CellSize != 0)
+                            select v.X).FirstOrDefault();
+
+            if (invalidX != 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(vertices), $"Invalid vertex X coordinate {invalidX}");
+            }
+
+            //rem negative range of y values 
+            var invalidY = (from v in vertices
+                            where (v.Y> 0) || (v.Y > Height) || (v.Y % CellSize != 0)
+                            select v.Y).FirstOrDefault();
+
+            if (invalidY != 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(vertices), $"Invalid vertex Y coordinate {invalidY}");
+            }
+        }
         private char CalcRowLetter(List<Vertex> vertices)
         {
             const byte asciiA = 65; //(byte)'A'
