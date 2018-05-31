@@ -44,7 +44,7 @@ function btnClickHandler(e) {
         var url = "api/imagegrid/GetTriangle?row=" + row + "&col=" + col;
 
         $("#content1").empty();
-        $("#contentError").empty();
+        $("#contentError1").empty();
         $.getJSON(url, getTriangleCallback)
             .fail(function (jqxhr, status, error) { handleError(error, "#contentError1"); });
 
@@ -87,6 +87,7 @@ function btnRowAndColumnClickHandler(e) {
 }
 
 function handleError(e, selector) {
+    console.log(selector);
     $(selector).empty();
     $(selector).append("ERROR: " + e + "<br/>");
 }
