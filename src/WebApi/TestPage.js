@@ -3,7 +3,7 @@ function drawTriangle(triangle) {
 
     console.log(triangle);
     console.log(triangle.Vertices.length);
-
+    console.log($.param(triangle.Vertices));
     var c = $("#canvas1")[0];
     var ctx = c.getContext("2d");
     var p1 = triangle.Vertices[0];
@@ -46,15 +46,48 @@ function btnClickHandler(e) {
         $("#content1").empty();
         $("#contentError").empty();
         $.getJSON(url, getTriangleCallback)
-            .fail(function (jqxhr, status, error) { handleError(error); });
+            .fail(function (jqxhr, status, error) { handleError(error, "#contentError1"); });
 
     } catch (e) {
-        handleError(e);
+        handleError(e, "#contentError1");
     }
 }
 
-function handleError(e) {
-    $("#contentError").empty();
-    $("#contentError").append("ERROR: " + e + "<br/>");
+function getRowAndColumnCallback(result, status, xhr) {
+    //alert(status);
+    var jqEl = $("#content2");
+    jqEl.append("timestamp = " + (new Date()).toTimeString() + " <br/>");
+    jqEl.append("status = " + status + " <br/>");
+    jqEl.append("json = " + JSON.stringify(result));
+}
+
+function btnRowAndColumnClickHandler(e) {
+    try {
+
+        v1X = $("#txtV1X").val().trim(); //0;
+        v1Y = $("#txtV1Y").val().trim(); //0;
+        v2X = $("#txtV2X").val().trim(); //10;
+        v2Y = $("#txtV2Y").val().trim(); //-10;
+        v3X = $("#txtV3X").val().trim(); //0
+        v3Y = $("#txtV3Y").val().trim(); //-10;
+
+        var url = "api/imagegrid/GetRowAndColumn?"
+        url += "v1X=" + v1X + "&v1Y=" + v1Y; 
+        url += "&v2X=" + v2X + "&v2Y=" + v2Y; 
+        url += "&v3X=" + v3X + "&v3Y=" + v3Y; 
+
+        $("#content2").empty();
+        $("#contentError2").empty();
+        $.getJSON(url, getRowAndColumnCallback)
+            .fail(function (jqxhr, status, error) { handleError(error, "#contentError2"); });
+
+    } catch (e) {
+        handleError(e, "#contentError2");
+    }
+}
+
+function handleError(e, selector) {
+    $(selector).empty();
+    $(selector).append("ERROR: " + e + "<br/>");
 }
 

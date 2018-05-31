@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="utf-8" />
     <title>Simple WebApi test page</title>
@@ -12,17 +12,32 @@
     <h1>Simple WebApi Test Page</h1>
     <h2>Q 1.A</h2>
     <div>
-        <p>Enter Row and Column e.g. A1</p>
+        <p>Enter Row and Column (Number 1-12) below e.g. A1</p>
+        <p><small>Format is a capital letter A-F followed by a number 1-12</small></p>
         <input type="text" id="txtGridRef" value="A1" />
+        <br /><br />
         <button type="button" title="Get Triangle" onclick="btnClickHandler()">Get Triangle</button>
     </div>
     <br />
     <div id="content1"></div>
-    <div id="contentError"></div>
+    <div id="contentError1"></div>
     <br />
     <canvas id="canvas1" width="120" height="120" style="border:1px solid #d3d3d3;"></canvas>
     <h2>Q 1.B</h2>
-    <div>WIP</div>
+    <div>
+        v1 X:<input type="number" id="txtV1X" value="0" maxlength="2"/>
+        Y:<input type="number" id="txtV1Y" value="0" maxlength="3"/><br />
+
+        v2 X:<input type="number" id="txtV2X" value="10" maxlength="2" />
+        Y:<input type="number" id="txtV2Y" value="-10" maxlength="3"/><br />
+
+        v3 X:<input type="number" id="txtV3X" value="0" maxlength="2"/>
+        Y:<input type="number" id="txtV3Y" value="-10" maxlength="3"/><br />
+        <br />
+        <button type="button" title="Get Row And Column" onclick="btnRowAndColumnClickHandler()">Get Row And Column</button>
+    </div>
+    <div id="content2"></div>
+    <div id="contentError2"></div>
 
 </body>
 </html>
